@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:44:20 by mzhukova          #+#    #+#             */
-/*   Updated: 2023/12/01 16:58:59 by mzhukova         ###   ########.fr       */
+/*   Updated: 2023/12/04 11:58:29 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <fcntl.h>
 
 char	*get_next_line(int fd);
 
