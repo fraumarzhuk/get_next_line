@@ -6,108 +6,64 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:44:09 by mzhukova          #+#    #+#             */
-/*   Updated: 2023/12/06 19:46:28 by mzhukova         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:28:59 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-
-ssize_t	read_char(int fd, char *buffer)
+char	*read_and_store(char *buffer, int fd)
 {
-	return (read(fd, buffer, 1));
-}
+	char *res;
+	int i;
 
-char	*process_remainder(char **remainder)
-{
-	char	*line;
-	char	*newline_pos;
-	char	*new_remainder;
-
-	line = NULL;
-	newline_pos = ft_strchr(*remainder, '\n');
-	if (newline_pos)
+	i = 1;
+	res  = calloc(BUFFER_SIZE + 1, 0);
+	res[BUFFER_SIZE] = '\0';
+	res[0] = buffer[0];
+	while (read(fd, buffer, 1) > 0 && buffer[0] != '\0' && buffer[0] != '\n')
 	{
-		*newline_pos = '\0';
-		line = ft_strdup(*remainder);
-		new_remainder = ft_strdup(newline_pos + 1);
-		free(*remainder);
-		*remainder = new_remainder;
+		if (*buffer != '\n')
+			res[i] = buffer[0];
+		i++;
 	}
-	else
-	{
-		line = *remainder;
-		*remainder = NULL;
-	}
-	return (line);
-}
-
-char	*handle_end(ssize_t bytes_read, char *line)
-{
-	if (bytes_read < 0)
-	{
-		free(line);
+	if (res[0] == '\0')
 		return (NULL);
-	}
-	if (bytes_read == 0 && !line)
-		return (NULL);
-	return (line);
-}
-
-char	*read_and_store(int fd, char **remainder, char *line)
-{
-	char	buffer[2];
-	ssize_t	bytes_read;
-
-	bytes_read = read_char(fd, buffer);
-	while (bytes_read > 0)
-	{
-		buffer[1] = '\0';
-		if (buffer[0] == '\n')
-		{
-			*remainder = ft_append(*remainder, '\0');
-			break ;
-		}
-		line = ft_append(line, buffer[0]);
-		if (line)
-			return (NULL);
-		bytes_read = read_char(fd, buffer);
-	}
-	return (handle_end(bytes_read, line));
+	if (buffer[0] == '\n')
+		res[i] = '\n';
+	return (res);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*remainder;
-	char		*line;
+	static char	buffer[BUFFER_SIZE];
+	size_t		bytes_read;
+	char		*res;
 
-	line = NULL;
-	if (remainder)
+	bytes_read = read(fd, buffer, 1);
+	if (fd > 0 && BUFFER_SIZE > 0 && bytes_read != 0)
 	{
-		line = process_remainder(&remainder);
-		if (line)
-			return (line);
+		res = read_and_store(buffer, fd);
+		return (res);
 	}
-	return (read_and_store(fd, &remainder, line));
-}
-
-#include <stdio.h>
-int main ()
-{
-	int		fd;
-
-	fd = open("text.txt", O_RDONLY);
-	char *res = get_next_line(fd);
-	printf("Res: %s", res);
-	res = get_next_line(fd);
-	printf("Res2: %s", res);
-		res = get_next_line(fd);
-	printf("Res2: %s", res);
+	// free(buffer);
+	return (NULL);
 
 }
 
 
-// Reading the file into the buffer, until reaching \n
-// Saving the value read from the previous action into the char* (get line)
-// Saving the remained buffer into remainer
-// Repeat
+//#include <stdio.h>
+//int main ()
+//{
+//	int		fd;
+//
+//	fd = open("baal.txt", O_RDONLY);
+//	char *res = get_next_line(fd);
+//	printf("Res: %s", res);
+//	res = get_next_line(fd);
+//	printf("Res2: %s", res);
+////	res = get_next_line(fd);
+////	printf("Res2: %s", res);
+////		res = get_next_line(fd);
+////	printf("Res2: %s", res);
+//}

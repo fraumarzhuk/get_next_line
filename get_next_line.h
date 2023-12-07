@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:44:20 by mzhukova          #+#    #+#             */
-/*   Updated: 2023/12/06 19:49:56 by mzhukova         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:08:44 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,6 @@
 # include <fcntl.h>
 
 char	*get_next_line(int fd);
-size_t	ft_strlen(const char *s);
-char	*ft_strcpy(char *dest, const char *src);
-char	*ft_strchr(const char *s, int c);
-char	*ft_strdup(const char *s1);
-char	*ft_append(char *str, char c);
-void	*ft_calloc(size_t count, size_t size);
-void	*ft_memset(void *str, int c, size_t len);
+char *read_and_store(char *buffer, int fd);
 
 #endif
