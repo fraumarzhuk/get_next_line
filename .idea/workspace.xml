@@ -12,12 +12,9 @@
     <list default="true" id="d8b668fa-8431-459d-810b-9e28e2302336" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/a.out" beforeDir="false" afterPath="$PROJECT_DIR$/a.out" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/baal.txt" beforeDir="false" afterPath="$PROJECT_DIR$/baal.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/get_next_line" beforeDir="false" afterPath="$PROJECT_DIR$/get_next_line" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/get_next_line.c" beforeDir="false" afterPath="$PROJECT_DIR$/get_next_line.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/get_next_line.dSYM/Contents/Resources/DWARF/get_next_line" beforeDir="false" afterPath="$PROJECT_DIR$/get_next_line.dSYM/Contents/Resources/DWARF/get_next_line" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/get_next_line.h" beforeDir="false" afterPath="$PROJECT_DIR$/get_next_line.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/get_next_line_utils.c" beforeDir="false" afterPath="$PROJECT_DIR$/get_next_line_utils.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lalal.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lalal.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -54,7 +51,7 @@
   }
 }</component>
   <component name="RunManager">
-    <configuration name="get_next_line.c" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" nameIsGenerated="true" PROGRAM_PARAMS="hellohello" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="get_next_line" TARGET_NAME="get_next_line.c" CONFIG_NAME="get_next_line.c">
+    <configuration name="get_next_line.c" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" nameIsGenerated="true" PROGRAM_PARAMS="lalal.txt" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="get_next_line" TARGET_NAME="get_next_line.c" CONFIG_NAME="get_next_line.c">
       <option name="compilerOptions" value="-Wall -Werror -Wextra" />
       <option name="sourceFile" value="get_next_line.c" />
       <method v="2">
@@ -73,6 +70,8 @@
       <workItem from="1701888838058" duration="677000" />
       <workItem from="1701954862218" duration="1670000" />
       <workItem from="1701961565406" duration="127000" />
+      <workItem from="1701962985039" duration="358000" />
+      <workItem from="1702036677569" duration="1207000" />
     </task>
     <servers />
   </component>
