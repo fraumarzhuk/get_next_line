@@ -6,14 +6,14 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 02:11:08 by mariannazhu       #+#    #+#             */
-/*   Updated: 2023/12/09 18:12:06 by mzhukova         ###   ########.fr       */
+/*   Updated: 2023/12/09 18:48:17 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 42
+# define BUFFER_SIZE 1000
 #endif
 
 char	*get_start(const char *remainer)
@@ -35,8 +35,8 @@ char	*get_start(const char *remainer)
 		temp++;
 		remainer++;
 	}
-	*temp = '\n';
-	temp++;
+	if (*remainer == '\n')
+		*temp++ = '\n';
 	*temp = '\0';
 	return (start);
 }
@@ -73,7 +73,7 @@ char	*read_and_store(char *buffer, char **remainer)
 	char	*new_remainer;
 
 	res = NULL;
-	if (*remainer == NULL) //If there is no remainer
+	if (*remainer == NULL)
 		*remainer = ft_strdup(buffer);
 	else
 	{
@@ -131,13 +131,12 @@ char	*get_next_line(int fd)
 	return (process_remainder(&remainer));
 }
 
-
 // #include <stdio.h>
 
 // int main()
 // {
 // 	char	*res;
-// 	int	fd = open("text.txt", O_RDONLY);
+// 	int	fd = open("baal.txt", O_RDONLY);
 
 // 	if (fd < 0)
 // 		printf("File not open \n");

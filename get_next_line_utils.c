@@ -6,11 +6,9 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 01:39:07 by mariannazhu       #+#    #+#             */
-/*   Updated: 2023/12/09 17:02:26 by mzhukova         ###   ########.fr       */
+/*   Updated: 2023/12/09 19:07:05 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "get_next_line.h"
 
@@ -40,7 +38,6 @@ char	*ft_strrchr(const char *s, int c)
 	return (NULL);
 }
 
-
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*result;
@@ -64,60 +61,34 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (result);
 }
 
-void	*ft_memset(void *str, int c, size_t len)
-{
-	unsigned char	*b;
-
-	b = (unsigned char *) str;
-	while (len--)
-	{
-		*b++ = (unsigned char) c;
-	}
-	return (str);
-}
-
-void	*ft_calloc(size_t count, size_t size)
-{
-	int	*p;
-
-	p = malloc(count * size);
-	if (p != NULL)
-		ft_memset(p, 0, count * size);
-	return (p);
-}
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
-{
-	size_t	i;
-	size_t	src_len;
-
-	i = 0;
-	src_len = 0;
-	if (src == NULL)
-		return (0);
-	while (src[src_len] != '\0')
-		src_len++;
-	if (dstsize == 0)
-		return (src_len);
-	while (i < (dstsize - 1) && src[i] != '\0')
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	if (dstsize > 0)
-		dst[i] = '\0';
-	return (src_len);
-}
-
-char	*ft_strdup(const char *s1)
+void	*ft_calloc(int count, int size)
 {
 	char	*p;
+	int		i;
 
-	p = malloc((ft_strlen(s1) + 1) * sizeof(char));
-	if (p == NULL)
+	p = malloc(count * size);
+	if (!p)
 		return (NULL);
-	ft_strlcpy(p, s1, (ft_strlen(s1) + 1));
+	i = 0;
+	while (i < count * size)
+		p[i++] = 0;
 	return (p);
 }
 
+char	*ft_strdup(const char *s)
+{
+	char	*s2;
+	int		i;
 
+	i = 0;
+	s2 = malloc ((sizeof(char)) * (ft_strlen(s) + 1));
+	if (!s2 || !s)
+		return (NULL);
+	while (s[i] != '\0')
+	{
+		s2[i] = s[i];
+		i++;
+	}
+	s2[i] = '\0';
+	return (s2);
+}
