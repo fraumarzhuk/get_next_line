@@ -5,61 +5,105 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/01 16:44:09 by mzhukova          #+#    #+#             */
-/*   Updated: 2023/12/08 16:52:04 by mzhukova         ###   ########.fr       */
+/*   Created: 2023/12/09 02:11:08 by mariannazhu       #+#    #+#             */
+/*   Updated: 2023/12/09 15:32:42 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 10
+# define BUFFER_SIZE 20
 #endif
 
-
-#include <string.h> 
-
-char	*find_n(char *cur_line, char *line_left)
+char	*get_start(const char *remainer)
 {
-	int		i;
-	char	*res;
+	int		len;
+	char	*start;
+	char	*temp;
 
-	i = 0;
-	res = NULL;
-	if (strchr(cur_line, '\n') == 0)
+	len = 0;
+	while (remainer[len] != '\n' && remainer[len] != '\0')
+		len++;
+	start = malloc(len + 1);
+	if (!start)
+		return (NULL);
+	temp = start;
+	while (*remainer != '\n' && *remainer != '\0')
 	{
-		line_left = ft_strjoin(line_left, cur_line);
-		return (line_left);
+		*temp = *remainer;
+		temp++;
+		remainer++;
 	}
-	while (cur_line[i] != '\n')
-	{
-		*res = cur_line[i];
-		i++;
-		res++;
-	}
-	*res = '\n';
-	while (*line_left != '\0')
-		line_left++;
-	while (cur_line[i] != '\0')
-	{
-		*line_left = cur_line[i];
-		line_left++;
-		i++;
-	}
-	return (NULL);
+	*temp = '\n';
+	temp++;
+	*temp = '\0';
+	return (start);
 }
 
-char	*line_check(char *buffer, char *line_left)
+char	*get_remainer(const char *remainer)
+{
+	char	*end;
+	char	*temp;
+	int		n;
+
+	n = 0;
+	while (remainer[n] != '\n' && remainer[n] != '\0')
+		n++;
+	if (remainer[n] == '\0' || remainer[n + 1] == '\0')
+		return (NULL);
+	end = malloc(ft_strlen(remainer) - n + 1);
+	if (!end)
+		return (NULL);
+	temp = end;
+	remainer += n + 1;
+	while (*remainer != '\0')
+	{
+		*temp++ = *remainer++;
+		n++;
+	}
+	*temp = '\0';
+	return (end);
+}
+
+char	*read_and_store(char *buffer, char **remainer)
+{
+	char	*res;
+	char	*temp;
+	char	*new_remainer;
+
+	res = NULL;
+	if (*remainer == NULL)
+		*remainer = ft_strdup(buffer);
+	else
+	{
+		temp = ft_strjoin(*remainer, buffer);
+		free(*remainer);
+		*remainer = temp;
+	}
+	if (!*remainer)
+		return (NULL);
+	if (ft_strrchr(*remainer, '\n') == NULL)
+		return (NULL);
+	else
+	{
+		res = get_start(*remainer);
+		new_remainer = get_remainer(*remainer);
+		free(*remainer);
+		*remainer = new_remainer;
+		return (res);
+	}
+}
+
+char	*process_remainder(char **remainer)
 {
 	char	*res;
 
-	if (*line_left == '\0')
-		res = find_n(buffer, line_left);
-
-	else
+	if (*remainer != NULL && **remainer != '\0')
 	{
-		res = ft_strjoin(line_left, buffer);
-		res = find_n(line_left, line_left);
+		res = ft_strdup(*remainer);
+		free(*remainer);
+		*remainer = NULL;
 		return (res);
 	}
 	return (NULL);
@@ -67,38 +111,41 @@ char	*line_check(char *buffer, char *line_left)
 
 char	*get_next_line(int fd)
 {
-	static char		*buffer;
-	static char		*line_left;
-	char			*res;
-	size_t			bytes_read;
+	static char	*remainer;
+	char		buffer[BUFFER_SIZE + 1];
+	char		*res;
+	size_t		bytes_read;
 
-	bytes_read = read(fd, buffer, BUFFER_SIZE);
-	if (!(fd < 0) && BUFFER_SIZE > 0 && bytes_read > 0)
+	if (fd < 0)
+		return (NULL);
+	while (1)
 	{
-		res = line_check(buffer, line_left);
-		while (strchr(res, '\n') == 0)
-		{
-			res = get_next_line(fd);
-		}
-		return (res);
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read <= 0)
+			break ;
+		buffer[bytes_read] = '\0';
+		res = read_and_store(buffer, &remainer);
+		if (res != NULL)
+			return (res);
 	}
-	return (NULL);
-
+	return (process_remainder(&remainer));
 }
 
-#include <stdio.h>
-int main (int argc, char **argv)
-{
-	int		fd;
-	(void) argc;
 
-	fd = open(argv[1], O_RDONLY);
-	char *res = get_next_line(fd);
-	printf("Res: %s", res);
-	res = get_next_line(fd);
-	printf("Res2: %s", res);
-	res = get_next_line(fd);
-	printf("Res2: %s", res);
-		res = get_next_line(fd);
-	printf("Res2: %s", res);
-}
+// #include <stdio.h>
+
+// int main()
+// {
+// 	char	*res;
+// 	int	fd = open("text.txt", O_RDONLY);
+
+// 	if (fd < 0)
+// 		printf("File not open \n");
+
+// 	res = get_next_line(fd);
+// 	printf("Res1: %s", res);
+// 	res = get_next_line(fd);
+// 	printf("Res2: %s", res);
+// 	res = get_next_line(fd);
+// 	printf("Res3: %s", res);
+// }
