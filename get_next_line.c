@@ -6,14 +6,14 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 02:11:08 by mariannazhu       #+#    #+#             */
-/*   Updated: 2023/12/09 15:32:42 by mzhukova         ###   ########.fr       */
+/*   Updated: 2023/12/09 18:12:06 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 20
+# define BUFFER_SIZE 42
 #endif
 
 char	*get_start(const char *remainer)
@@ -73,7 +73,7 @@ char	*read_and_store(char *buffer, char **remainer)
 	char	*new_remainer;
 
 	res = NULL;
-	if (*remainer == NULL)
+	if (*remainer == NULL) //If there is no remainer
 		*remainer = ft_strdup(buffer);
 	else
 	{
@@ -116,7 +116,7 @@ char	*get_next_line(int fd)
 	char		*res;
 	size_t		bytes_read;
 
-	if (fd < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
 	while (1)
 	{

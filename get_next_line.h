@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariannazhukova <mariannazhukova@studen    +#+  +:+       +#+        */
+/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:44:20 by mzhukova          #+#    #+#             */
-/*   Updated: 2023/12/08 23:31:58 by mariannazhu      ###   ########.fr       */
+/*   Updated: 2023/12/09 17:03:11 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

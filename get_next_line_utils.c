@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariannazhukova <mariannazhukova@studen    +#+  +:+       +#+        */
+/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 01:39:07 by mariannazhu       #+#    #+#             */
-/*   Updated: 2023/12/09 01:39:21 by mariannazhu      ###   ########.fr       */
+/*   Updated: 2023/12/09 17:02:26 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,9 +113,11 @@ char	*ft_strdup(const char *s1)
 {
 	char	*p;
 
-	p = ft_calloc(ft_strlen(s1) + 1, sizeof(char));
+	p = malloc((ft_strlen(s1) + 1) * sizeof(char));
 	if (p == NULL)
 		return (NULL);
 	ft_strlcpy(p, s1, (ft_strlen(s1) + 1));
 	return (p);
 }
+
+
