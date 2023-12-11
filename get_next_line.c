@@ -6,14 +6,14 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 02:11:08 by mariannazhu       #+#    #+#             */
-/*   Updated: 2023/12/09 18:48:17 by mzhukova         ###   ########.fr       */
+/*   Updated: 2023/12/11 14:44:42 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 1000
+# define BUFFER_SIZE 42
 #endif
 
 char	*get_start(const char *remainer)
@@ -25,7 +25,7 @@ char	*get_start(const char *remainer)
 	len = 0;
 	while (remainer[len] != '\n' && remainer[len] != '\0')
 		len++;
-	start = malloc(len + 1);
+	start = malloc(len + 2);
 	if (!start)
 		return (NULL);
 	temp = start;
@@ -50,7 +50,7 @@ char	*get_remainer(const char *remainer)
 	n = 0;
 	while (remainer[n] != '\n' && remainer[n] != '\0')
 		n++;
-	if (remainer[n] == '\0' || remainer[n + 1] == '\0')
+	if (remainer[n] == '\0' || remainer[n + 1] == '\0' )
 		return (NULL);
 	end = malloc(ft_strlen(remainer) - n + 1);
 	if (!end)
@@ -58,10 +58,7 @@ char	*get_remainer(const char *remainer)
 	temp = end;
 	remainer += n + 1;
 	while (*remainer != '\0')
-	{
 		*temp++ = *remainer++;
-		n++;
-	}
 	*temp = '\0';
 	return (end);
 }
@@ -95,18 +92,25 @@ char	*read_and_store(char *buffer, char **remainer)
 	}
 }
 
-char	*process_remainder(char **remainer)
+char	*process_remainer(char **remainer)
 {
 	char	*res;
 
+	res = NULL;
 	if (*remainer != NULL && **remainer != '\0')
 	{
-		res = ft_strdup(*remainer);
-		free(*remainer);
-		*remainer = NULL;
-		return (res);
+		if (ft_strrchr(*remainer, '\n') != NULL)
+		{
+			res = read_and_store("", remainer);
+		}
+		else
+		{
+			res = ft_strdup(*remainer);
+			free(*remainer);
+			*remainer = NULL;
+		}
 	}
-	return (NULL);
+	return (res);
 }
 
 char	*get_next_line(int fd)
@@ -117,7 +121,10 @@ char	*get_next_line(int fd)
 	size_t		bytes_read;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	{
+		remainer = NULL;
 		return (NULL);
+	}
 	while (1)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
@@ -128,7 +135,7 @@ char	*get_next_line(int fd)
 		if (res != NULL)
 			return (res);
 	}
-	return (process_remainder(&remainer));
+	return (process_remainer(&remainer));
 }
 
 // #include <stdio.h>
@@ -147,4 +154,8 @@ char	*get_next_line(int fd)
 // 	printf("Res2: %s", res);
 // 	res = get_next_line(fd);
 // 	printf("Res3: %s", res);
+// 	res = get_next_line(fd);
+// 	printf("Res4: %s", res);
+// 	res = get_next_line(fd);
+// 	printf("Res4: %s", res);
 // }
